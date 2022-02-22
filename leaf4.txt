@@ -1,5 +1,5 @@
 ! Version 10.5.3.0
-! Last configuration change at Feb  15 23:22:41 2022
+! Last configuration change at Feb  22 11:42:35 2022
 !
 ip vrf default
 !
@@ -19,6 +19,12 @@ class-map type application class-iscsi
 policy-map type application policy-iscsi
 !
 virtual-network 10000
+!
+virtual-network 10689
+!
+virtual-network 10690
+!
+virtual-network 10699
 !
 virtual-network 20000
 !
@@ -85,6 +91,18 @@ interface vlan100
 !
 interface vlan200
  virtual-network 20000
+ no shutdown
+!
+interface vlan689
+ virtual-network 10689
+ no shutdown
+!
+interface vlan690
+ virtual-network 10690
+ no shutdown
+!
+interface vlan699
+ virtual-network 10699
  no shutdown
 !
 interface vlan4000
@@ -464,6 +482,18 @@ evpn
 virtual-network 10000
  !
  vxlan-vni 10000
+!
+virtual-network 10689
+ !
+ vxlan-vni 10689
+!
+virtual-network 10690
+ !
+ vxlan-vni 10690
+!
+virtual-network 10699
+ !
+ vxlan-vni 10699
 !
 virtual-network 20000
  !

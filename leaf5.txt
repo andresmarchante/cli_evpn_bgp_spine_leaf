@@ -1,11 +1,11 @@
 ! Version 10.5.3.0
-! Last configuration change at Feb  22 11:34:30 2022
+! Last configuration change at Feb  22 11:44:17 2022
 !
 ip vrf default
 !
 ip vrf tenant1
 !
-hostname Leaf1
+hostname Leaf5
 system-user linuxadmin password ****
 ip virtual-router mac-address 00:01:01:01:01:01
 iscsi target port 860
@@ -85,23 +85,8 @@ port-group 1/1/18
 interface vlan1
  no shutdown
 !
-interface vlan96
- no shutdown
-!
-interface vlan97
- no shutdown
-!
-interface vlan98
- no shutdown
-!
-interface vlan99
- no shutdown
-!
 interface vlan100
  virtual-network 10000
- no shutdown
-!
-interface vlan101
  no shutdown
 !
 interface vlan200
@@ -129,19 +114,13 @@ interface vlan4000
 interface port-channel10
  no shutdown
  switchport mode trunk
+ switchport access vlan 1
  switchport trunk allowed vlan 100,200
  vlt-port-channel 10
 !
-interface port-channel20
- no shutdown
- switchport mode trunk
- switchport access vlan 1
- switchport trunk allowed vlan 96-101,689-690,699
- vlt-port-channel 20
-!
 interface loopback0
  no shutdown
- ip address 192.168.10.1/32
+ ip address 192.168.10.5/32
 !
 nve
  source-interface loopback0
@@ -149,7 +128,7 @@ nve
 interface mgmt1/1/1
  no shutdown
  no ip address dhcp
- ip address 192.168.1.103/24
+ ip address 192.168.1.107/24
  ipv6 address autoconfig
 !
 interface ethernet1/1/1
@@ -173,13 +152,12 @@ interface ethernet1/1/3
 !
 interface ethernet1/1/4
  no shutdown
- channel-group 20 mode active
- no switchport
+ switchport access vlan 690
  flowcontrol receive off
 !
 interface ethernet1/1/5
  no shutdown
- switchport access vlan 1
+ switchport access vlan 699
  flowcontrol receive off
 !
 interface ethernet1/1/6
@@ -448,17 +426,17 @@ interface ethernet1/1/56
 interface virtual-network10000
  no shutdown
  ip vrf forwarding tenant1
- ip address 10.1.0.231/16
+ ip address 10.1.0.235/16
  ip virtual-router address 10.1.0.100
 !
 interface virtual-network20000
  no shutdown
  ip vrf forwarding tenant1
- ip address 10.2.0.231/16
+ ip address 10.2.0.235/16
  ip virtual-router address 10.2.0.100
 !
-router bgp 65001
- router-id 172.16.0.1
+router bgp 65005
+ router-id 172.16.0.5
  !
  address-family ipv4 unicast
   redistribute connected
@@ -488,14 +466,13 @@ router bgp 65001
   no shutdown
 !
 vlt-domain 1
- backup destination 192.168.1.104
+ backup destination 192.168.1.108
  discovery-interface ethernet1/1/53-1/1/54
- vlt-mac aa:bb:cc:dd:ee:ff
 !
 evpn
  auto-evi
  disable-rt-asn
- router-mac 00:01:02:03:04:05
+ router-mac 00:01:02:03:04:07
  !
  vrf tenant1
   vni 3000
@@ -524,4 +501,5 @@ virtual-network 20000
 !
 snmp-server contact "Contact Support"
 !
+telemetry
 

@@ -1,5 +1,5 @@
 ! Version 10.5.3.0
-! Last configuration change at Feb  15 23:20:32 2022
+! Last configuration change at Feb  22 11:36:00 2022
 !
 ip vrf default
 !
@@ -19,6 +19,12 @@ class-map type application class-iscsi
 policy-map type application policy-iscsi
 !
 virtual-network 10000
+!
+virtual-network 10689
+!
+virtual-network 10690
+!
+virtual-network 10699
 !
 virtual-network 20000
 !
@@ -79,12 +85,39 @@ port-group 1/1/18
 interface vlan1
  no shutdown
 !
+interface vlan96
+ no shutdown
+!
+interface vlan97
+ no shutdown
+!
+interface vlan98
+ no shutdown
+!
+interface vlan99
+ no shutdown
+!
 interface vlan100
  virtual-network 10000
  no shutdown
 !
+interface vlan101
+ no shutdown
+!
 interface vlan200
  virtual-network 20000
+ no shutdown
+!
+interface vlan689
+ virtual-network 10689
+ no shutdown
+!
+interface vlan690
+ virtual-network 10690
+ no shutdown
+!
+interface vlan699
+ virtual-network 10699
  no shutdown
 !
 interface vlan4000
@@ -99,6 +132,13 @@ interface port-channel10
  switchport access vlan 1
  switchport trunk allowed vlan 100,200
  vlt-port-channel 10
+!
+interface port-channel20
+ no shutdown
+ switchport mode trunk
+ switchport access vlan 1
+ switchport trunk allowed vlan 96-101,689-690,699
+ vlt-port-channel 20
 !
 interface loopback0
  no shutdown
@@ -133,7 +173,8 @@ interface ethernet1/1/3
 !
 interface ethernet1/1/4
  no shutdown
- switchport access vlan 1
+ channel-group 20 mode active
+ no switchport
  flowcontrol receive off
 !
 interface ethernet1/1/5
@@ -464,6 +505,18 @@ evpn
 virtual-network 10000
  !
  vxlan-vni 10000
+!
+virtual-network 10689
+ !
+ vxlan-vni 10689
+!
+virtual-network 10690
+ !
+ vxlan-vni 10690
+!
+virtual-network 10699
+ !
+ vxlan-vni 10699
 !
 virtual-network 20000
  !

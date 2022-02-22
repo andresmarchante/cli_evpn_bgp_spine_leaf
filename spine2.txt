@@ -1,5 +1,5 @@
 ! Version 10.5.3.0
-! Last configuration change at Feb  15 23:24:59 2022
+! Last configuration change at Feb  22 11:50:56 2022
 !
 ip vrf default
 !
@@ -101,13 +101,23 @@ interface ethernet1/1/4
  flowcontrol receive off
 !
 interface ethernet1/1/5
+ description "'link to leaf5"
  no shutdown
- switchport access vlan 1
+ no switchport
+ mtu 9216
+ ipv6 nd max-ra-interval 4
+ ipv6 nd min-ra-interval 3
+ ipv6 nd send-ra
  flowcontrol receive off
 !
 interface ethernet1/1/6
+ description "'link to leaf6"
  no shutdown
- switchport access vlan 1
+ no switchport
+ mtu 9216
+ ipv6 nd max-ra-interval 4
+ ipv6 nd min-ra-interval 3
+ ipv6 nd send-ra
  flowcontrol receive off
 !
 interface ethernet1/1/7
@@ -277,6 +287,13 @@ router bgp 65124
  neighbor interface ethernet1/1/4
   inherit template ebgp_session inherit-type ebgp
   no shutdown
+ !
+ neighbor interface ethernet1/1/5
+  inherit template ebgp_session inherit-type ebgp
+  no shutdown
+ !
+ neighbor interface ethernet1/1/6
+  inherit template ebgp_session inherit-type ebgp
 !
 snmp-server contact "Contact Support"
 !
